@@ -1,14 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace VendasConsole
 {
     class Program
     {
+        //Format On Save
+        //https://www.geradorcpf.com/algoritmo_do_cpf.htm
         static void Main(string[] args)
         {
             int opcao;
-            Cliente c = new Cliente();
-            //Lista de clientes
+            Cliente c;
+            List<Cliente> clientes = new List<Cliente>();
+
             do
             {
                 Console.Clear();
@@ -22,19 +26,45 @@ namespace VendasConsole
                 switch (opcao)
                 {
                     case 1:
+                        c = new Cliente();
                         Console.WriteLine(" ---- CADASTRAR CLIENTE ---- \n");
                         Console.WriteLine("Digite o nome do cliente:");
                         c.Nome = Console.ReadLine();
                         Console.WriteLine("Digite o cpf do cliente:");
                         c.Cpf = Console.ReadLine();
 
-                        //Mensagem de sucesso
-                        Console.WriteLine($"Nome: {c.Nome} e CPF: {c.Cpf}");
-
+                        if (clientes.Count == 0)
+                        {
+                            clientes.Add(c);
+                            Console.WriteLine("Cliente salvo com sucesso!!!");
+                        }
+                        else
+                        {
+                            bool encontrado = false;
+                            foreach (Cliente clienteCadastrado in clientes)
+                            {
+                                if (clienteCadastrado.Cpf == c.Cpf)
+                                {
+                                    encontrado = true;
+                                }
+                            }
+                            if (!encontrado)
+                            {
+                                clientes.Add(c);
+                                Console.WriteLine("Cliente salvo com sucesso!!!");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Não foi possível cadastrar!");
+                            }
+                        }
                         break;
                     case 2:
                         Console.WriteLine(" ---- LISTAR CLIENTES ---- \n");
-                        //Laço de repetição para mostrar todos os clientes
+                        foreach (Cliente clienteCadastrado in clientes)
+                        {
+                            Console.WriteLine(clienteCadastrado);
+                        }
                         break;
                     case 0:
                         Console.WriteLine("Saindo...\n");
