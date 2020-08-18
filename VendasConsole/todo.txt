@@ -1,0 +1,8 @@
+﻿Refatorar
+[ ] Separar o projeto em camadas - MVC
+[ ] Mover a lista para uma camada DAL/DAO ou Repositório
+[ ] Criar os métodos de manipulação da lista
+[ ] Separar cada case em uma nova classe de visualização
+[ ] Separar o método de validação do CPF 
+[ ] Modularizar a validação do CPF
+[ ] Modularizar o cadastrado do cliente
