@@ -1,8 +1,12 @@
 ﻿Refatorar
-[ ] Separar o projeto em camadas - MVC
-[ ] Mover a lista para uma camada DAL/DAO ou Repositório
-[ ] Criar os métodos de manipulação da lista
-[ ] Separar cada case em uma nova classe de visualização
-[ ] Separar o método de validação do CPF 
+[x] Separar o projeto em camadas - MVC
+[x] Mover a lista para uma camada DAL/DAO ou Repositório
+[x] Criar os métodos de manipulação da lista
+[x] Separar cada case em uma nova classe de visualização
+[x] Separar o método de validação do CPF 
 [ ] Modularizar a validação do CPF
-[ ] Modularizar o cadastrado do cliente
+	[ ] Criar um método para remover a formatação
+	[ ] Criar um método para validar o tamanho da string
+	[ ] Criar um método para verificar digitos iguais
+	[ ] Criar um método para validar os digitos
+[x] Modularizar o cadastrado do cliente

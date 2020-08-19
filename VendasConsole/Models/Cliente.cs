@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace VendasConsole
+namespace VendasConsole.Models
 {
     class Cliente
     {
