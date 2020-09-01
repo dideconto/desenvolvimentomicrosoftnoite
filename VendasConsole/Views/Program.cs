@@ -49,7 +49,13 @@ namespace VendasConsole.Views
                         CadastrarVenda.Renderizar();
                         break;
                     case 8:
-                        ListarVendas.Renderizar();
+                        ListarVendas.Renderizar(VendaDAO.Listar());
+                        break;
+                    case 9:
+                        Console.Clear();
+                        Console.WriteLine("Digite o CPF do cliente: ");
+                        string cpf = Console.ReadLine();
+                        ListarVendas.Renderizar(VendaDAO.ListarPorCliente(cpf));
                         break;
                     case 0:
                         Console.WriteLine("Saindo...\n");
