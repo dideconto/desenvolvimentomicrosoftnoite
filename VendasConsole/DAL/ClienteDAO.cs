@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using VendasConsole.Models;
 
 namespace VendasConsole.DAL
@@ -18,14 +19,15 @@ namespace VendasConsole.DAL
         }
         public static Cliente BuscarCliente(string cpf)
         {
-            foreach (Cliente clienteCadastrado in clientes)
-            {
-                if (clienteCadastrado.Cpf == cpf)
-                {
-                    return clienteCadastrado;
-                }
-            }
-            return null;
+            return clientes.FirstOrDefault(x => x.Cpf == cpf);
+            //foreach (Cliente clienteCadastrado in clientes)
+            //{
+            //    if (clienteCadastrado.Cpf == cpf)
+            //    {
+            //        return clienteCadastrado;
+            //    }
+            //}
+            //return null;
         }
     }
 }

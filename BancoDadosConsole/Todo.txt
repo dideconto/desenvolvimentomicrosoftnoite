@@ -1,0 +1,15 @@
+﻿-- CONFIGURAÇÃO DO BANCO - ENTITY FRAMEWORK CODE FIRST - SQL SERVER --
+
+[x] Instalar a biblioteca → Install-Package Microsoft.EntityFrameworkCore.SqlServer -Project: BancoDadosConsole
+[x] Instalar a biblioteca → Install-Package Microsoft.EntityFrameworkCore.Tools -Project: BancoDadosConsole
+[x] Criar as classes de modelo
+[x] Criar uma classe que represente o EF dentro do projeto
+[x] Mapear as classes de modelo que vão virar tabelas no banco de dados
+[x] Criar e configurar a string de conexão com o banco
+[x] Adicionar um migração sempre que houver a necessidade de mudanças na
+estrutura do banco de dados → Add-Migration NomeMigracao -Project: BancoDadosConsole
+[x] Executar a atualização do banco, sempre que houver uma nova migração →
+Update-Database -verbose -Project: BancoDadosConsole
+
+Add-Migration NomeMigracao -Project: BancoDadosConsole; Update-Database 
+-verbose -Project: BancoDadosConsole
