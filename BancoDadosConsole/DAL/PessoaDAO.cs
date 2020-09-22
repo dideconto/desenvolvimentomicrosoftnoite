@@ -7,7 +7,7 @@ namespace BancoDadosConsole.DAL
 {
     class PessoaDAO
     {
-        private static Context _context = new Context();
+        private static Context _context = SingletonContext.GetInstance();
         public static bool Cadastrar(Pessoa pessoa)
         {
             if (BuscarPorEmail(pessoa.Email) == null)
