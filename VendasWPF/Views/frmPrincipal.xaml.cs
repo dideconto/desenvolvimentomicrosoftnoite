@@ -31,5 +31,11 @@ namespace VendasWPF.Views
             frmCadastrarProduto frm = new frmCadastrarProduto();
             frm.ShowDialog();
         }
+
+        private void menuCadastrarVenda_Click(object sender, RoutedEventArgs e)
+        {
+            frmCadastrarVenda frm = new frmCadastrarVenda();
+            frm.ShowDialog();
+        }
     }
 }

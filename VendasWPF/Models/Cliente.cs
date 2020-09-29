@@ -6,5 +6,6 @@ namespace VendasWPF.Models
     class Cliente : Pessoa
     {
         public string Email { get; set; }
+        //public override string ToString() => $"{Id} - {Nome}";
     }
 }

@@ -13,6 +13,7 @@
             </MenuItem>
             <MenuItem Header="_Cadastrar">
                 <MenuItem x:Name="menuCadastrarProduto" Header="_Produto" Click="menuCadastrarProduto_Click"/>
+                <MenuItem x:Name="menuCadastrarVenda" Header="_Venda" Click="menuCadastrarVenda_Click" />
             </MenuItem>
             <MenuItem Header="_Sobre"/>
         </Menu>

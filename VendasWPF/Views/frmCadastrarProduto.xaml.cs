@@ -53,6 +53,9 @@ namespace VendasWPF.Views
             txtPreco.Clear();
             txtCriadoEm.Clear();
             txtNome.Focus();
+            btnCadastrar.IsEnabled = true;
+            btnAlterar.IsEnabled = false;
+            btnRemover.IsEnabled = false;
         }
 
         private void btnBuscar_Click(object sender, RoutedEventArgs e)
@@ -62,10 +65,14 @@ namespace VendasWPF.Views
                 produto = ProdutoDAO.BuscarPorNome(txtNome.Text);
                 if (produto != null)
                 {
+                    btnCadastrar.IsEnabled = false;
+                    btnAlterar.IsEnabled = true;
+                    btnRemover.IsEnabled = true;
+
                     txtId.Text = produto.Id.ToString();
                     txtNome.Text = produto.Nome;
                     txtQuantidade.Text = produto.Quantidade.ToString();
-                    txtPreco.Text = produto.Preco.ToString(); ;
+                    txtPreco.Text = produto.Preco.ToString();
                     txtCriadoEm.Text = produto.CriadoEm.ToString();
                 }
                 else
@@ -80,6 +87,46 @@ namespace VendasWPF.Views
                 MessageBox.Show("Preencha o campo nome!!!", "Vendas WPF",
                     MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void btnLimpar_Click(object sender, RoutedEventArgs e)
+        {
+            LimparFormulario();
+        }
+
+        private void btnRemover_Click(object sender, RoutedEventArgs e)
+        {
+            if (produto != null)
+            {
+                ProdutoDAO.Remover(produto);
+                MessageBox.Show("O produto foi removido com sucesso!!!", "Vendas WPF",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else
+            {
+                MessageBox.Show("O produto não foi removido!!!", "Vendas WPF",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            LimparFormulario();
+        }
+
+        private void btnAlterar_Click(object sender, RoutedEventArgs e)
+        {
+            if (produto != null)
+            {
+                produto.Nome = txtNome.Text;
+                produto.Preco = Convert.ToDouble(txtPreco.Text);
+                produto.Quantidade = Convert.ToInt32(txtQuantidade.Text);
+                ProdutoDAO.Alterar(produto);
+                MessageBox.Show("O produto foi alterado com sucesso!!!", "Vendas WPF",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else
+            {
+                MessageBox.Show("O produto não foi alterado!!!", "Vendas WPF",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            LimparFormulario();
         }
     }
 }
