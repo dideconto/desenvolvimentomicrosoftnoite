@@ -6,7 +6,7 @@ namespace VendasWPF.DAL
 {
     class ProdutoDAO
     {
-        private static Context _context = new Context();
+        private static Context _context = SingletonContext.GetInstance();
         public static Produto BuscarPorNome(string nome) =>
             _context.Produtos.FirstOrDefault(x => x.Nome == nome);
         public static bool Cadastrar(Produto produto)

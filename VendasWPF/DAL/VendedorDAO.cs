@@ -7,7 +7,7 @@ namespace VendasWPF.DAL
 
     class VendedorDAO
     {
-        private static Context _context = new Context();
+        private static Context _context = SingletonContext.GetInstance();
         public static List<Vendedor> Listar() =>
                _context.Vendedores.ToList();
         public static Vendedor BuscarPorId(int id) =>

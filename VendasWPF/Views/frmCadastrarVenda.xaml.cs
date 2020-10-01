@@ -11,7 +11,9 @@ namespace VendasWPF.Views
     /// </summary>
     public partial class frmCadastrarVenda : Window
     {
-        private List<ItemVenda> itens = new List<ItemVenda>();
+        private Venda venda = new Venda();
+        private List<dynamic> itens = new List<dynamic>();
+        private double total = 0;
         public frmCadastrarVenda()
         {
             InitializeComponent();
@@ -38,15 +40,46 @@ namespace VendasWPF.Views
         {
             int id = (int)cboProdutos.SelectedValue;
             Produto produto = ProdutoDAO.BuscarPorId(id);
-            ItemVenda item = new ItemVenda
-            {
-                Produto = produto,
-                Preco = produto.Preco,
-                Quantidade = Convert.ToInt32(txtQuantidade.Text)
-            };
-            itens.Add(item);
+            PopularItensVenda(produto);
+            PopularDataGrid(produto);
             dtaProdutos.ItemsSource = itens;
             dtaProdutos.Items.Refresh();
+
+            total += Convert.ToInt32(txtQuantidade.Text) * produto.Preco;
+            lblTotal.Content = $"Total: {total:C2}";
+        }
+        private void PopularDataGrid(Produto produto)
+        {
+            itens.Add(new
+            {
+                Nome = produto.Nome,
+                Preco = produto.Preco.ToString("C2"),
+                Quantidade = Convert.ToInt32(txtQuantidade.Text),
+                Subtotal =
+                    (Convert.ToInt32(txtQuantidade.Text) * produto.Preco).ToString("C2")
+            });
+        }
+
+        private void PopularItensVenda(Produto produto)
+        {
+            venda.Itens.Add(
+                new ItemVenda
+                {
+                    Produto = produto,
+                    Preco = produto.Preco,
+                    Quantidade = Convert.ToInt32(txtQuantidade.Text)
+                }
+            );
+        }
+
+        private void btnCadastrar_Click(object sender, RoutedEventArgs e)
+        {
+            int idCliente = (int)cboClientes.SelectedValue;
+            int idVendedor = (int)cboVendedores.SelectedValue;
+            venda.Cliente = ClienteDAO.BuscarPorId(idCliente);
+            venda.Vendedor = VendedorDAO.BuscarPorId(idVendedor);
+            VendaDAO.Cadastrar(venda);
+            MessageBox.Show("Venda cadastrada com sucesso!!!");
         }
     }
 }
