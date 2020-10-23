@@ -1,0 +1,26 @@
+﻿@*Tecnologia da página - Razor*@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Cadastrar</title>
+</head>
+<body>
+    <form asp-action="Cadastrar" asp-controller="Produto" method="post">
+        <label>Nome:</label>
+        <input name="Nome" type="text" placeholder="Nome do Produto" /><br />
+
+        <label>Descrição:</label>
+        <input name="Descricao" type="text" placeholder="Descrição do Produto" /><br />
+
+        <label>Preço:</label>
+        <input name="Preco" type="text" placeholder="Preço do Produto" /><br />
+
+        <label>Quantidade:</label>
+        <input name="Quantidade" type="text" placeholder="Quantidade do Produto" /><br />
+
+        <input type="submit" value="Cadastrar" />
+    </form>
+</body>
+</html>
