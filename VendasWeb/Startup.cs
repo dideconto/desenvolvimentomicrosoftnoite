@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using VendasWeb.DAL;
 using VendasWeb.Models;
 
 namespace VendasWeb
@@ -20,6 +21,8 @@ namespace VendasWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<ProdutoDAO>();
+
             services.AddDbContext<Context>
                 (options => options.UseSqlServer(
                     Configuration.GetConnectionString("Connection")));

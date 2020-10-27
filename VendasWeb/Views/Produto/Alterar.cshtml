@@ -1,0 +1,35 @@
+﻿@*Tecnologia da página - Razor*@
+@{ Produto produto = ViewBag.Produto; }
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Alterar Produto</title>
+</head>
+<body>
+    <form asp-action="Alterar" asp-controller="Produto" method="post">
+        <fieldset>
+            <legend>Alterar Produto</legend>
+
+            <label for="Id">Id:</label>
+            <input value="@produto.Id" readonly name="Id" type="text" placeholder="Id do Produto" /><br />
+            <input value="@produto.Id" name="HdnId" type="hidden" />
+
+            <label>Nome:</label>
+            <input value="@produto.Nome" name="Nome" type="text" placeholder="Nome do Produto" /><br />
+
+            <label>Descrição:</label>
+            <input value="@produto.Descricao" name="Descricao" type="text" placeholder="Descrição do Produto" /><br />
+
+            <label>Preço:</label>
+            <input value="@produto.Preco" name="Preco" type="text" placeholder="Preço do Produto" /><br />
+
+            <label>Quantidade:</label>
+            <input value="@produto.Quantidade" name="Quantidade" type="text" placeholder="Quantidade do Produto" /><br />
+
+            <input type="submit" value="Salvar" />
+        </fieldset>
+    </form>
+</body>
+</html>
