@@ -1,31 +1,27 @@
-﻿@{ List<Produto> produtos = ViewBag.Produtos; }
+﻿@model List<Produto>
+@{ Layout = "~/Views/Shared/_Layout.cshtml"; }
 
-<!DOCTYPE html>
+<h3 class="espacamento-baixo">Gerencimento de Produtos</h3>
 
-<html>
-<head>
-    <title>Gerenciamento de Produtos</title>
-</head>
-<body>
-    <h2>Gerencimento de Produtos</h2>
-    <a asp-action="Cadastrar" asp-controller="Produto">Cadastrar Produto</a>
+<a asp-action="Cadastrar" asp-controller="Produto"
+   class="btn btn-primary espacamento-baixo">Cadastrar Produto</a>
 
-    <table>
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Nome</th>
-                <th>Descrição</th>
-                <th>Quantidade</th>
-                <th>Preço</th>
-                <th>Criado em</th>
-                <th></th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (Produto produtoCadastrado in produtos)
-            {
+<table class="table table-hover table-striped espacamento-baixo">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Quantidade</th>
+            <th>Preço</th>
+            <th>Criado em</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Produto produtoCadastrado in Model)
+        {
 <tr>
     <td>@produtoCadastrado.Id</td>
     <td>@produtoCadastrado.Nome</td>
@@ -43,12 +39,9 @@
            asp-controller="Produto"
            asp-route-id="@produtoCadastrado.Id">Alterar</a>
     </td>
-</tr>
-}
-        </tbody>
-    </table>
+</tr>}
+    </tbody>
+</table>
 
-    <span><b>Quantidade de produtos: </b> @produtos.Count </span><br />
-    <span><b>Dados atualizados: </b> @DateTime.Now </span>
-</body>
-</html>
+<p><b>Quantidade de produtos: </b> @Model.Count </p>
+<p><b>Dados atualizados: </b> @DateTime.Now </p>

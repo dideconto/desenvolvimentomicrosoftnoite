@@ -1,4 +1,5 @@
-﻿@*Tecnologia da página - Razor*@
+﻿@model Produto
+@*Tecnologia da página - Razor*@
 <!DOCTYPE html>
 
 <html>
@@ -8,19 +9,29 @@
 </head>
 <body>
     <form asp-action="Cadastrar" asp-controller="Produto" method="post">
-        <label>Nome:</label>
-        <input name="Nome" type="text" placeholder="Nome do Produto" /><br />
+        <fieldset>
+            <legend>Cadastrar Produto</legend>
 
-        <label>Descrição:</label>
-        <input name="Descricao" type="text" placeholder="Descrição do Produto" /><br />
+            <div asp-validation-summary="ModelOnly"></div>
 
-        <label>Preço:</label>
-        <input name="Preco" type="text" placeholder="Preço do Produto" /><br />
+            <label asp-for="Nome">Nome:</label>
+            <input asp-for="Nome" type="text" placeholder="Nome do Produto" />
+            <span asp-validation-for="Nome"></span><br />
 
-        <label>Quantidade:</label>
-        <input name="Quantidade" type="text" placeholder="Quantidade do Produto" /><br />
+            <label asp-for="Descricao">Descrição:</label>
+            <input asp-for="Descricao" type="text" placeholder="Descrição do Produto" />
+            <span asp-validation-for="Descricao"></span><br />
 
-        <input type="submit" value="Cadastrar" />
+            <label asp-for="Preco">Preço:</label>
+            <input asp-for="Preco" type="text" placeholder="Preço do Produto" />
+            <span asp-validation-for="Preco"></span><br />
+
+            <label asp-for="Quantidade">Quantidade:</label>
+            <input asp-for="Quantidade" type="text" placeholder="Quantidade do Produto" />
+            <span asp-validation-for="Quantidade"></span><br />
+
+            <input type="submit" value="Cadastrar" />
+        </fieldset>
     </form>
 </body>
 </html>

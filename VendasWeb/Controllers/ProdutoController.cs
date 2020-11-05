@@ -6,28 +6,31 @@ namespace VendasWeb.Controllers
 {
     public class ProdutoController : Controller
     {
+        //https://getbootstrap.com/
+        //https://bootswatch.com/
+        //https://www.w3schools.com/bootstrap4/default.asp
+
         private readonly ProdutoDAO _produtoDAO;
         public ProdutoController(ProdutoDAO produtoDAO) => _produtoDAO = produtoDAO;
         public IActionResult Index()
         {
-            ViewBag.Produtos = _produtoDAO.Listar();
-            return View();
+            ViewBag.Title = "Gerenciamento de Produtos";
+            return View(_produtoDAO.Listar());
         }
         public IActionResult Cadastrar() => View();
 
         [HttpPost]
-        public IActionResult Cadastrar(string Nome, string Descricao, int Quantidade,
-           double Preco)
+        public IActionResult Cadastrar(Produto produto)
         {
-            Produto produto = new Produto
+            if (ModelState.IsValid)
             {
-                Nome = Nome,
-                Descricao = Descricao,
-                Quantidade = Quantidade,
-                Preco = Preco
-            };
-            _produtoDAO.Cadastrar(produto);
-            return RedirectToAction("Index", "Produto");
+                if (_produtoDAO.Cadastrar(produto))
+                {
+                    return RedirectToAction("Index", "Produto");
+                }
+                ModelState.AddModelError("", "Já existe um produto com o mesmo nome!");
+            }
+            return View(produto);
         }
         public IActionResult Remover(int id)
         {
@@ -36,19 +39,11 @@ namespace VendasWeb.Controllers
         }
         public IActionResult Alterar(int id)
         {
-            ViewBag.Produto = _produtoDAO.BuscarPorId(id);
-            return View();
+            return View(_produtoDAO.BuscarPorId(id));
         }
         [HttpPost]
-        public IActionResult Alterar(string Nome, string Descricao, int Quantidade,
-           double Preco, int Id, int HdnId)
+        public IActionResult Alterar(Produto produto)
         {
-            Produto produto = _produtoDAO.BuscarPorId(Id);
-            produto.Nome = Nome;
-            produto.Descricao = Descricao;
-            produto.Quantidade = Quantidade;
-            produto.Preco = Preco;
-
             _produtoDAO.Alterar(produto);
             return RedirectToAction("Index", "Produto");
         }
