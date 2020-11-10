@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.IO;
 using VendasWeb.DAL;
 using VendasWeb.Models;
 
@@ -11,7 +15,12 @@ namespace VendasWeb.Controllers
         //https://www.w3schools.com/bootstrap4/default.asp
 
         private readonly ProdutoDAO _produtoDAO;
-        public ProdutoController(ProdutoDAO produtoDAO) => _produtoDAO = produtoDAO;
+        private readonly IWebHostEnvironment _hosting;
+        public ProdutoController(ProdutoDAO produtoDAO, IWebHostEnvironment hosting)
+        {
+            _produtoDAO = produtoDAO;
+            _hosting = hosting;
+        }
         public IActionResult Index()
         {
             ViewBag.Title = "Gerenciamento de Produtos";
@@ -20,10 +29,21 @@ namespace VendasWeb.Controllers
         public IActionResult Cadastrar() => View();
 
         [HttpPost]
-        public IActionResult Cadastrar(Produto produto)
+        public IActionResult Cadastrar(Produto produto, IFormFile file)
         {
             if (ModelState.IsValid)
             {
+                if (file != null)
+                {
+                    string arquivo = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
+                    string caminho = Path.Combine(_hosting.WebRootPath, "images", arquivo);
+                    file.CopyTo(new FileStream(caminho, FileMode.CreateNew));
+                    produto.Imagem = arquivo;
+                }
+                else
+                {
+                    produto.Imagem = "semimagem.gif";
+                }
                 if (_produtoDAO.Cadastrar(produto))
                 {
                     return RedirectToAction("Index", "Produto");

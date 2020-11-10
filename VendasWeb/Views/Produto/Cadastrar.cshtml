@@ -1,37 +1,40 @@
-﻿@model Produto
-@*Tecnologia da página - Razor*@
-<!DOCTYPE html>
+﻿@*Tecnologia da página - Razor*@
+@model Produto
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Cadastrar</title>
-</head>
-<body>
-    <form asp-action="Cadastrar" asp-controller="Produto" method="post">
-        <fieldset>
-            <legend>Cadastrar Produto</legend>
+<form asp-action="Cadastrar" asp-controller="Produto" method="post"
+      enctype="multipart/form-data">
+    <fieldset>
+        <legend>Cadastrar Produto</legend>
 
-            <div asp-validation-summary="ModelOnly"></div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
+        <div class="form-group">
             <label asp-for="Nome">Nome:</label>
-            <input asp-for="Nome" type="text" placeholder="Nome do Produto" />
-            <span asp-validation-for="Nome"></span><br />
+            <input class="form-control" asp-for="Nome" type="text" placeholder="Nome do Produto" />
+            <span class="text-danger" asp-validation-for="Nome"></span>
+        </div>
 
+        <div class="form-group">
             <label asp-for="Descricao">Descrição:</label>
-            <input asp-for="Descricao" type="text" placeholder="Descrição do Produto" />
-            <span asp-validation-for="Descricao"></span><br />
+            <input class="form-control" asp-for="Descricao" type="text" placeholder="Descrição do Produto" />
+            <span class="text-danger" asp-validation-for="Descricao"></span>
+        </div>
 
+        <div class="form-group">
             <label asp-for="Preco">Preço:</label>
-            <input asp-for="Preco" type="text" placeholder="Preço do Produto" />
-            <span asp-validation-for="Preco"></span><br />
+            <input class="form-control" asp-for="Preco" type="text" placeholder="Preço do Produto" />
+            <span class="text-danger" asp-validation-for="Preco"></span>
+        </div>
 
+        <div class="form-group">
             <label asp-for="Quantidade">Quantidade:</label>
-            <input asp-for="Quantidade" type="text" placeholder="Quantidade do Produto" />
-            <span asp-validation-for="Quantidade"></span><br />
-
-            <input type="submit" value="Cadastrar" />
-        </fieldset>
-    </form>
-</body>
-</html>
+            <input class="form-control" asp-for="Quantidade" type="text" placeholder="Quantidade do Produto" />
+            <span class="text-danger" asp-validation-for="Quantidade"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Imagem">Imagem:</label>
+            <input class="form-control-file" type="file" name="file" />
+        </div>
+        <input class="btn btn-info" type="submit" value="Cadastrar" />
+    </fieldset>
+</form>

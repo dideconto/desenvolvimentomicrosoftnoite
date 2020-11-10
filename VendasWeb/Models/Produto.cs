@@ -20,5 +20,6 @@ namespace VendasWeb.Models
 
         [Required(ErrorMessage = "Campo obrigatório!")]
         public double Preco { get; set; }
+        public string Imagem { get; set; }
     }
 }
