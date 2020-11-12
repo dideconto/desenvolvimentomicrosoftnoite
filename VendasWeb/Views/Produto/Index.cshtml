@@ -13,6 +13,7 @@
             <th>Descrição</th>
             <th>Quantidade</th>
             <th>Preço</th>
+            <th>Categoria</th>
             <th>Imagem</th>
             <th>Criado em</th>
             <th></th>
@@ -28,6 +29,7 @@
     <td>@produtoCadastrado.Descricao</td>
     <td>@produtoCadastrado.Quantidade</td>
     <td>@produtoCadastrado.Preco.ToString("C2")</td>
+    <td>@produtoCadastrado.Categoria.Nome</td>
     <td>
         <img src="~/images/@produtoCadastrado.Imagem" alt="@produtoCadastrado.Descricao"
              style="width:120px;height:100px" />
@@ -45,8 +47,7 @@
            asp-route-id="@produtoCadastrado.Id"
            class="btn btn-warning">Alterar</a>
     </td>
-</tr>
-}
+</tr>}
     </tbody>
 </table>
 

@@ -22,6 +22,7 @@ namespace VendasWeb
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<ProdutoDAO>();
+            services.AddScoped<CategoriaDAO>();
 
             services.AddDbContext<Context>
                 (options => options.UseSqlServer(

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.IO;
 using VendasWeb.DAL;
@@ -15,10 +16,14 @@ namespace VendasWeb.Controllers
         //https://www.w3schools.com/bootstrap4/default.asp
 
         private readonly ProdutoDAO _produtoDAO;
+        private readonly CategoriaDAO _categoriaDAO;
         private readonly IWebHostEnvironment _hosting;
-        public ProdutoController(ProdutoDAO produtoDAO, IWebHostEnvironment hosting)
+        public ProdutoController(ProdutoDAO produtoDAO,
+            IWebHostEnvironment hosting,
+            CategoriaDAO categoriaDAO)
         {
             _produtoDAO = produtoDAO;
+            _categoriaDAO = categoriaDAO;
             _hosting = hosting;
         }
         public IActionResult Index()
@@ -26,7 +31,11 @@ namespace VendasWeb.Controllers
             ViewBag.Title = "Gerenciamento de Produtos";
             return View(_produtoDAO.Listar());
         }
-        public IActionResult Cadastrar() => View();
+        public IActionResult Cadastrar()
+        {
+            ViewBag.Categorias = new SelectList(_categoriaDAO.Listar(), "Id", "Nome");
+            return View();
+        }
 
         [HttpPost]
         public IActionResult Cadastrar(Produto produto, IFormFile file)
@@ -44,12 +53,14 @@ namespace VendasWeb.Controllers
                 {
                     produto.Imagem = "semimagem.gif";
                 }
+                produto.Categoria = _categoriaDAO.BuscarPorId(produto.CategoriaId);
                 if (_produtoDAO.Cadastrar(produto))
                 {
                     return RedirectToAction("Index", "Produto");
                 }
                 ModelState.AddModelError("", "Já existe um produto com o mesmo nome!");
             }
+            ViewBag.Categorias = new SelectList(_categoriaDAO.Listar(), "Id", "Nome");
             return View(produto);
         }
         public IActionResult Remover(int id)
