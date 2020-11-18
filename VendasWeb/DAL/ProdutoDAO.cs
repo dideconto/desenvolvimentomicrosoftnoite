@@ -14,11 +14,8 @@ namespace VendasWeb.DAL
         public Produto BuscarPorId(int id) => _context.Produtos.Find(id);
         public Produto BuscarPorNome(string nome) =>
             _context.Produtos.FirstOrDefault(x => x.Nome == nome);
-
-        public List<Produto> BuscarPorCategoria(int id) =>
-            _context.Produtos.
-            Where(x => x.CategoriaId == id).ToList();
-
+        public List<Produto> ListarPorCategoria(int id) =>
+            _context.Produtos.Where(x => x.CategoriaId == id).ToList();
         public bool Cadastrar(Produto produto)
         {
             if (BuscarPorNome(produto.Nome) == null)

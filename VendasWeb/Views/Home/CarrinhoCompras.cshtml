@@ -1,0 +1,43 @@
+﻿@model List<ItemVenda>
+
+<h3>Carrinho de Compras</h3>
+
+<table class="table table-hover table-striped">
+    <thead>
+        <tr>
+            <th>Imagem</th>
+            <th>Nome</th>
+            <th>Quantidade</th>
+            <th>Preço</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+<tr>
+    <td>
+        <img src="~/images/@item.Produto.Imagem" alt="@item.Produto.Descricao"
+             style="width:120px;height:100px" class="img-thumbnail" />
+    </td>
+    <td>
+        @item.Produto.Nome
+    </td>
+    <td>
+        @item.Quantidade
+    </td>
+    <td>
+        @item.Preco.ToString("C2")
+    </td>
+    <td>
+        @{ double subtotal = item.Preco * item.Quantidade; }
+        @subtotal.ToString("C2")
+    </td>
+</tr>
+}
+    </tbody>
+</table>
+
+<div class="btn btn-success">
+    Total: <span class="badge badge-light">@ViewBag.Total.ToString("C2")</span>
+</div>
