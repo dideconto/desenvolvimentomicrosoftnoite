@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Threading.Tasks;
 using VendasWeb.Models;
 
@@ -22,27 +22,10 @@ namespace VendasWeb.Controllers
         }
 
         // GET: Usuario
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Usuarios.ToListAsync());
-        }
-
-        // GET: Usuario/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var usuarioView = await _context.Usuarios
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (usuarioView == null)
-            {
-                return NotFound();
-            }
-
-            return View(usuarioView);
         }
 
         // GET: Usuario/Create
@@ -77,7 +60,6 @@ namespace VendasWeb.Controllers
             }
             return View(usuarioView);
         }
-
         public void AdicionarErros(IdentityResult resultado)
         {
             foreach (IdentityError erro in resultado.Errors)
@@ -86,89 +68,29 @@ namespace VendasWeb.Controllers
             }
         }
 
-        // GET: Usuario/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Login()
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var usuarioView = await _context.Usuarios.FindAsync(id);
-            if (usuarioView == null)
-            {
-                return NotFound();
-            }
-            return View(usuarioView);
+            return View();
         }
 
-        // POST: Usuario/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Email,Senha,Id,CriadoEm")] UsuarioView usuarioView)
+        public async Task<IActionResult> Login([Bind("Email, Senha")] UsuarioView usuarioView)
         {
-            if (id != usuarioView.Id)
-            {
-                return NotFound();
-            }
+            var result = await _signInManager.PasswordSignInAsync(usuarioView.Email, usuarioView.Senha, false, false);
 
-            if (ModelState.IsValid)
+            var name = User.Identity.Name;
+            if (result.Succeeded)
             {
-                try
-                {
-                    _context.Update(usuarioView);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UsuarioViewExists(usuarioView.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Produto");
             }
+            ModelState.AddModelError("", "Login ou senha inválidos!");
             return View(usuarioView);
         }
 
-        // GET: Usuario/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Logout()
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var usuarioView = await _context.Usuarios
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (usuarioView == null)
-            {
-                return NotFound();
-            }
-
-            return View(usuarioView);
-        }
-
-        // POST: Usuario/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var usuarioView = await _context.Usuarios.FindAsync(id);
-            _context.Usuarios.Remove(usuarioView);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool UsuarioViewExists(int id)
-        {
-            return _context.Usuarios.Any(e => e.Id == id);
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
     }
 }
